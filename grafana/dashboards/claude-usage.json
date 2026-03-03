@@ -28,13 +28,44 @@
           {
             "matcher": {
               "id": "byName",
+              "options": "Session (actual)"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#5794F2"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Weekly (actual)"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#73BF69"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
               "options": "Session (ideal)"
             },
             "properties": [
               {
                 "id": "color",
                 "value": {
-                  "mode": "palette-classic"
+                  "mode": "fixed",
+                  "fixedColor": "#5794F2"
                 }
               },
               {
@@ -70,7 +101,8 @@
               {
                 "id": "color",
                 "value": {
-                  "mode": "palette-classic"
+                  "mode": "fixed",
+                  "fixedColor": "#73BF69"
                 }
               },
               {
@@ -178,13 +210,44 @@
           {
             "matcher": {
               "id": "byName",
+              "options": "session"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#5794F2"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "weekly"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#73BF69"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
               "options": "Ideal \u2014 session"
             },
             "properties": [
               {
                 "id": "color",
                 "value": {
-                  "mode": "palette-classic"
+                  "mode": "fixed",
+                  "fixedColor": "#5794F2"
                 }
               },
               {
@@ -220,7 +283,8 @@
               {
                 "id": "color",
                 "value": {
-                  "mode": "palette-classic"
+                  "mode": "fixed",
+                  "fixedColor": "#73BF69"
                 }
               },
               {
