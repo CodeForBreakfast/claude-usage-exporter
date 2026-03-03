@@ -68,24 +68,46 @@
     {
       "title": "Utilization Over Time \u2014 $account",
       "type": "timeseries",
+      "pluginVersion": "11.0.0",
       "repeat": "account",
       "repeatDirection": "v",
       "maxPerRow": 1,
-      "gridPos": { "h": 8, "w": 24, "x": 0, "y": 8 },
+      "gridPos": { "h": 9, "w": 24, "x": 0, "y": 8 },
       "fieldConfig": {
         "defaults": {
           "unit": "percent",
           "min": 0,
           "max": 100,
+          "color": { "mode": "palette-classic" },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": { "legend": false, "tooltip": false, "viz": false },
+            "insertNulls": false,
+            "lineInterpolation": "smooth",
+            "lineWidth": 2,
+            "pointSize": 5,
+            "scaleDistribution": { "type": "linear" },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": { "group": "A", "mode": "none" },
+            "thresholdsStyle": { "mode": "dashed" }
+          },
           "thresholds": {
             "mode": "absolute",
             "steps": [
               { "color": "green", "value": null },
-              { "color": "yellow", "value": 60 },
+              { "color": "yellow", "value": 50 },
               { "color": "red", "value": 80 }
             ]
-          },
-          "color": { "mode": "palette-classic" }
+          }
         },
         "overrides": [
           {
@@ -112,25 +134,33 @@
       },
       "options": {
         "tooltip": { "mode": "multi", "sort": "desc" },
-        "legend": { "displayMode": "table", "placement": "bottom", "calcs": ["lastNotNull", "max"] }
+        "legend": { "displayMode": "table", "placement": "bottom", "showLegend": true, "calcs": ["lastNotNull", "max"] }
       },
       "targets": [
         {
+          "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "editorMode": "code",
           "expr": "max by (account, org_id) (claude_usage_session_utilization_percent{account=~\"$account\"})",
           "legendFormat": "session",
           "refId": "A"
         },
         {
+          "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "editorMode": "code",
           "expr": "max by (account, org_id) (claude_usage_weekly_utilization_percent{account=~\"$account\"})",
           "legendFormat": "weekly",
           "refId": "B"
         },
         {
+          "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "editorMode": "code",
           "expr": "clamp_min(clamp_max((1 - (min by (account, org_id) (claude_usage_session_reset_seconds{account=~\"$account\"}) - time()) / 18000) * 100, 100), 0)",
           "legendFormat": "Ideal \u2014 session",
           "refId": "C"
         },
         {
+          "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "editorMode": "code",
           "expr": "clamp_min(clamp_max((1 - (min by (account, org_id) (claude_usage_weekly_reset_seconds{account=~\"$account\"}) - time()) / 604800) * 100, 100), 0)",
           "legendFormat": "Ideal \u2014 weekly",
           "refId": "D"
@@ -325,13 +355,12 @@
           "qryType": 1,
           "query": "label_values(claude_usage_session_utilization_percent, account)"
         },
-        "options": [],
         "hide": 2,
         "skipUrlSync": true,
         "includeAll": true,
         "multi": true,
-        "current": { "selected": true, "text": "All", "value": "$__all" },
-        "refresh": 2,
+        "current": {},
+        "refresh": 1,
         "sort": 1
       }
     ]
