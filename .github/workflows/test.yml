@@ -22,6 +22,13 @@ jobs:
           nix_path: nixpkgs=channel:nixos-unstable
       - run: nix build .#default
 
+  lint-dashboards:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Lint Grafana dashboards
+        run: bash scripts/lint-dashboards.sh
+
   flake-check:
     runs-on: ubuntu-latest
     steps:
@@ -33,7 +40,7 @@ jobs:
 
   alert-on-failure:
     if: github.ref == 'refs/heads/main' && failure()
-    needs: [build, flake-check]
+    needs: [build, lint-dashboards, flake-check]
     runs-on: ubuntu-latest
     permissions:
       issues: write
