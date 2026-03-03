@@ -321,6 +321,7 @@
         "type": "query",
         "datasource": { "type": "prometheus", "uid": "prometheus" },
         "query": "label_values(claude_usage_session_utilization_percent, account)",
+        "hide": 2,
         "includeAll": false,
         "multi": true,
         "current": {},
