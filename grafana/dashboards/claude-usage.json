@@ -328,9 +328,9 @@
         "options": [],
         "hide": 2,
         "skipUrlSync": true,
-        "includeAll": false,
+        "includeAll": true,
         "multi": true,
-        "current": {},
+        "current": { "selected": true, "text": "All", "value": "$__all" },
         "refresh": 2,
         "sort": 1
       }
