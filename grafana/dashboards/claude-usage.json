@@ -161,321 +161,323 @@
       "type": "row",
       "title": "$account",
       "repeat": "account",
-      "collapsed": false,
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 9 }
-    },
-    {
-      "title": "Utilization Over Time",
-      "type": "timeseries",
-      "gridPos": {
-        "h": 8,
-        "w": 14,
-        "x": 0,
-        "y": 10
-      },
-      "fieldConfig": {
-        "defaults": {
-          "unit": "percent",
-          "min": 0,
-          "max": 100,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              { "color": "green", "value": null },
-              { "color": "yellow", "value": 60 },
-              { "color": "red", "value": 80 }
-            ]
+      "collapsed": true,
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 9 },
+      "panels": [
+        {
+          "title": "Utilization Over Time",
+          "type": "timeseries",
+          "gridPos": {
+            "h": 8,
+            "w": 14,
+            "x": 0,
+            "y": 10
           },
-          "color": {
-            "mode": "palette-classic"
-          }
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "session"
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percent",
+              "min": 0,
+              "max": 100,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  { "color": "green", "value": null },
+                  { "color": "yellow", "value": 60 },
+                  { "color": "red", "value": 80 }
+                ]
+              },
+              "color": {
+                "mode": "palette-classic"
+              }
             },
-            "properties": [
+            "overrides": [
               {
-                "id": "color",
-                "value": {
-                  "mode": "fixed",
-                  "fixedColor": "#5794F2"
-                }
+                "matcher": {
+                  "id": "byName",
+                  "options": "session"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "mode": "fixed",
+                      "fixedColor": "#5794F2"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "weekly"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "mode": "fixed",
+                      "fixedColor": "#73BF69"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Ideal \u2014 session"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "mode": "fixed",
+                      "fixedColor": "#5794F2"
+                    }
+                  },
+                  {
+                    "id": "custom.lineStyle",
+                    "value": {
+                      "dash": [10, 10],
+                      "fill": "dash"
+                    }
+                  },
+                  {
+                    "id": "custom.fillOpacity",
+                    "value": 0
+                  },
+                  {
+                    "id": "custom.lineWidth",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Ideal \u2014 weekly"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "mode": "fixed",
+                      "fixedColor": "#73BF69"
+                    }
+                  },
+                  {
+                    "id": "custom.lineStyle",
+                    "value": {
+                      "dash": [4, 4],
+                      "fill": "dash"
+                    }
+                  },
+                  {
+                    "id": "custom.fillOpacity",
+                    "value": 0
+                  },
+                  {
+                    "id": "custom.lineWidth",
+                    "value": 1
+                  }
+                ]
               }
             ]
           },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "weekly"
+          "options": {
+            "tooltip": {
+              "mode": "multi",
+              "sort": "desc"
             },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "mode": "fixed",
-                  "fixedColor": "#73BF69"
-                }
-              }
-            ]
+            "legend": {
+              "displayMode": "table",
+              "placement": "bottom",
+              "calcs": ["lastNotNull", "max"]
+            }
           },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Ideal \u2014 session"
+          "targets": [
+            {
+              "expr": "max by (account, org_id) (claude_usage_session_utilization_percent{account=~\"$account\"})",
+              "legendFormat": "session",
+              "refId": "A"
             },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "mode": "fixed",
-                  "fixedColor": "#5794F2"
-                }
-              },
-              {
-                "id": "custom.lineStyle",
-                "value": {
-                  "dash": [10, 10],
-                  "fill": "dash"
-                }
-              },
-              {
-                "id": "custom.fillOpacity",
-                "value": 0
-              },
-              {
-                "id": "custom.lineWidth",
-                "value": 1
-              }
-            ]
+            {
+              "expr": "max by (account, org_id) (claude_usage_weekly_utilization_percent{account=~\"$account\"})",
+              "legendFormat": "weekly",
+              "refId": "B"
+            },
+            {
+              "expr": "clamp_min(clamp_max((1 - (min by (account, org_id) (claude_usage_session_reset_seconds{account=~\"$account\"}) - time()) / 18000) * 100, 100), 0) and min by (account, org_id) (claude_usage_session_reset_seconds{account=~\"$account\"}) > time()",
+              "legendFormat": "Ideal \u2014 session",
+              "refId": "C"
+            },
+            {
+              "expr": "clamp_min(clamp_max((1 - (min by (account, org_id) (claude_usage_weekly_reset_seconds{account=~\"$account\"}) - time()) / 604800) * 100, 100), 0) and min by (account, org_id) (claude_usage_weekly_reset_seconds{account=~\"$account\"}) > time()",
+              "legendFormat": "Ideal \u2014 weekly",
+              "refId": "D"
+            }
+          ]
+        },
+        {
+          "title": "Session",
+          "type": "gauge",
+          "gridPos": {
+            "h": 5,
+            "w": 5,
+            "x": 14,
+            "y": 10
           },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Ideal \u2014 weekly"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "mode": "fixed",
-                  "fixedColor": "#73BF69"
-                }
-              },
-              {
-                "id": "custom.lineStyle",
-                "value": {
-                  "dash": [4, 4],
-                  "fill": "dash"
-                }
-              },
-              {
-                "id": "custom.fillOpacity",
-                "value": 0
-              },
-              {
-                "id": "custom.lineWidth",
-                "value": 1
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percent",
+              "min": 0,
+              "max": 100,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  { "color": "green", "value": null },
+                  { "color": "yellow", "value": 60 },
+                  { "color": "red", "value": 80 }
+                ]
               }
-            ]
-          }
-        ]
-      },
-      "options": {
-        "tooltip": {
-          "mode": "multi",
-          "sort": "desc"
-        },
-        "legend": {
-          "displayMode": "table",
-          "placement": "bottom",
-          "calcs": ["lastNotNull", "max"]
-        }
-      },
-      "targets": [
-        {
-          "expr": "max by (account, org_id) (claude_usage_session_utilization_percent{account=~\"$account\"})",
-          "legendFormat": "session",
-          "refId": "A"
+            },
+            "overrides": []
+          },
+          "options": {
+            "reduceOptions": {
+              "calcs": ["lastNotNull"]
+            },
+            "showThresholdMarkers": true,
+            "showThresholdLabels": false
+          },
+          "targets": [
+            {
+              "expr": "max by (account, org_id) (claude_usage_session_utilization_percent{account=~\"$account\"})",
+              "legendFormat": "",
+              "refId": "A"
+            }
+          ]
         },
         {
-          "expr": "max by (account, org_id) (claude_usage_weekly_utilization_percent{account=~\"$account\"})",
-          "legendFormat": "weekly",
-          "refId": "B"
+          "title": "",
+          "type": "stat",
+          "transparent": true,
+          "gridPos": {
+            "h": 3,
+            "w": 5,
+            "x": 14,
+            "y": 15
+          },
+          "fieldConfig": {
+            "defaults": {
+              "unit": "dtdurations",
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  { "color": "red", "value": null },
+                  { "color": "yellow", "value": 600 },
+                  { "color": "green", "value": 3600 }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "options": {
+            "reduceOptions": {
+              "calcs": ["lastNotNull"]
+            },
+            "colorMode": "value",
+            "graphMode": "none",
+            "textMode": "value_and_name",
+            "justifyMode": "center"
+          },
+          "targets": [
+            {
+              "expr": "min by (account, org_id) (claude_usage_session_reset_seconds{account=~\"$account\"}) - time()",
+              "legendFormat": "resets in",
+              "refId": "A"
+            }
+          ]
         },
         {
-          "expr": "clamp_min(clamp_max((1 - (min by (account, org_id) (claude_usage_session_reset_seconds{account=~\"$account\"}) - time()) / 18000) * 100, 100), 0) and min by (account, org_id) (claude_usage_session_reset_seconds{account=~\"$account\"}) > time()",
-          "legendFormat": "Ideal \u2014 session",
-          "refId": "C"
+          "title": "Weekly",
+          "type": "gauge",
+          "gridPos": {
+            "h": 5,
+            "w": 5,
+            "x": 19,
+            "y": 10
+          },
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percent",
+              "min": 0,
+              "max": 100,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  { "color": "green", "value": null },
+                  { "color": "yellow", "value": 60 },
+                  { "color": "red", "value": 80 }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "options": {
+            "reduceOptions": {
+              "calcs": ["lastNotNull"]
+            },
+            "showThresholdMarkers": true,
+            "showThresholdLabels": false
+          },
+          "targets": [
+            {
+              "expr": "max by (account, org_id) (claude_usage_weekly_utilization_percent{account=~\"$account\"})",
+              "legendFormat": "",
+              "refId": "A"
+            }
+          ]
         },
         {
-          "expr": "clamp_min(clamp_max((1 - (min by (account, org_id) (claude_usage_weekly_reset_seconds{account=~\"$account\"}) - time()) / 604800) * 100, 100), 0) and min by (account, org_id) (claude_usage_weekly_reset_seconds{account=~\"$account\"}) > time()",
-          "legendFormat": "Ideal \u2014 weekly",
-          "refId": "D"
-        }
-      ]
-    },
-    {
-      "title": "Session",
-      "type": "gauge",
-      "gridPos": {
-        "h": 5,
-        "w": 5,
-        "x": 14,
-        "y": 10
-      },
-      "fieldConfig": {
-        "defaults": {
-          "unit": "percent",
-          "min": 0,
-          "max": 100,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              { "color": "green", "value": null },
-              { "color": "yellow", "value": 60 },
-              { "color": "red", "value": 80 }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "options": {
-        "reduceOptions": {
-          "calcs": ["lastNotNull"]
-        },
-        "showThresholdMarkers": true,
-        "showThresholdLabels": false
-      },
-      "targets": [
-        {
-          "expr": "max by (account, org_id) (claude_usage_session_utilization_percent{account=~\"$account\"})",
-          "legendFormat": "",
-          "refId": "A"
-        }
-      ]
-    },
-    {
-      "title": "",
-      "type": "stat",
-      "transparent": true,
-      "gridPos": {
-        "h": 3,
-        "w": 5,
-        "x": 14,
-        "y": 15
-      },
-      "fieldConfig": {
-        "defaults": {
-          "unit": "dtdurations",
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              { "color": "red", "value": null },
-              { "color": "yellow", "value": 600 },
-              { "color": "green", "value": 3600 }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "options": {
-        "reduceOptions": {
-          "calcs": ["lastNotNull"]
-        },
-        "colorMode": "value",
-        "graphMode": "none",
-        "textMode": "value_and_name",
-        "justifyMode": "center"
-      },
-      "targets": [
-        {
-          "expr": "min by (account, org_id) (claude_usage_session_reset_seconds{account=~\"$account\"}) - time()",
-          "legendFormat": "resets in",
-          "refId": "A"
-        }
-      ]
-    },
-    {
-      "title": "Weekly",
-      "type": "gauge",
-      "gridPos": {
-        "h": 5,
-        "w": 5,
-        "x": 19,
-        "y": 10
-      },
-      "fieldConfig": {
-        "defaults": {
-          "unit": "percent",
-          "min": 0,
-          "max": 100,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              { "color": "green", "value": null },
-              { "color": "yellow", "value": 60 },
-              { "color": "red", "value": 80 }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "options": {
-        "reduceOptions": {
-          "calcs": ["lastNotNull"]
-        },
-        "showThresholdMarkers": true,
-        "showThresholdLabels": false
-      },
-      "targets": [
-        {
-          "expr": "max by (account, org_id) (claude_usage_weekly_utilization_percent{account=~\"$account\"})",
-          "legendFormat": "",
-          "refId": "A"
-        }
-      ]
-    },
-    {
-      "title": "",
-      "type": "stat",
-      "transparent": true,
-      "gridPos": {
-        "h": 3,
-        "w": 5,
-        "x": 19,
-        "y": 15
-      },
-      "fieldConfig": {
-        "defaults": {
-          "unit": "dtdurations",
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              { "color": "red", "value": null },
-              { "color": "yellow", "value": 3600 },
-              { "color": "green", "value": 86400 }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "options": {
-        "reduceOptions": {
-          "calcs": ["lastNotNull"]
-        },
-        "colorMode": "value",
-        "graphMode": "none",
-        "textMode": "value_and_name",
-        "justifyMode": "center"
-      },
-      "targets": [
-        {
-          "expr": "min by (account, org_id) (claude_usage_weekly_reset_seconds{account=~\"$account\"}) - time()",
-          "legendFormat": "resets in",
-          "refId": "A"
+          "title": "",
+          "type": "stat",
+          "transparent": true,
+          "gridPos": {
+            "h": 3,
+            "w": 5,
+            "x": 19,
+            "y": 15
+          },
+          "fieldConfig": {
+            "defaults": {
+              "unit": "dtdurations",
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  { "color": "red", "value": null },
+                  { "color": "yellow", "value": 3600 },
+                  { "color": "green", "value": 86400 }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "options": {
+            "reduceOptions": {
+              "calcs": ["lastNotNull"]
+            },
+            "colorMode": "value",
+            "graphMode": "none",
+            "textMode": "value_and_name",
+            "justifyMode": "center"
+          },
+          "targets": [
+            {
+              "expr": "min by (account, org_id) (claude_usage_weekly_reset_seconds{account=~\"$account\"}) - time()",
+              "legendFormat": "resets in",
+              "refId": "A"
+            }
+          ]
         }
       ]
     },
