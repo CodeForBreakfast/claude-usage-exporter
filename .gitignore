@@ -1,4 +1,5 @@
 accounts.yaml
+claude-usage-exporter
 result
 result-*
 .direnv
