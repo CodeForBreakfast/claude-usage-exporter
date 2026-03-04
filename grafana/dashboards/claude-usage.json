@@ -11,7 +11,12 @@
       "type": "row",
       "title": "Cumulative",
       "collapsed": false,
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 0 }
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "title": "Cumulative Usage \u2014 All Accounts",
@@ -77,7 +82,10 @@
               {
                 "id": "custom.lineStyle",
                 "value": {
-                  "dash": [10, 10],
+                  "dash": [
+                    10,
+                    10
+                  ],
                   "fill": "dash"
                 }
               },
@@ -107,7 +115,10 @@
               {
                 "id": "custom.lineStyle",
                 "value": {
-                  "dash": [4, 4],
+                  "dash": [
+                    4,
+                    4
+                  ],
                   "fill": "dash"
                 }
               },
@@ -131,7 +142,10 @@
         "legend": {
           "displayMode": "table",
           "placement": "bottom",
-          "calcs": ["lastNotNull", "max"]
+          "calcs": [
+            "lastNotNull",
+            "max"
+          ]
         }
       },
       "targets": [
@@ -171,41 +185,69 @@
           "thresholds": {
             "mode": "absolute",
             "steps": [
-              { "color": "red", "value": null },
-              { "color": "#EAB839", "value": 20 },
-              { "color": "green", "value": 50 }
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 20
+              },
+              {
+                "color": "green",
+                "value": 50
+              }
             ]
           },
           "custom": {
             "cellOptions": {
-              "type": "auto"
+              "type": "color-background"
             }
           }
         },
         "overrides": [
           {
-            "matcher": { "id": "byName", "options": "account" },
+            "matcher": {
+              "id": "byName",
+              "options": "account"
+            },
             "properties": [
               {
                 "id": "custom.cellOptions",
-                "value": { "type": "auto" }
+                "value": {
+                  "type": "auto"
+                }
               },
-              { "id": "custom.width", "value": 140 }
+              {
+                "id": "custom.width",
+                "value": 140
+              }
             ]
           },
           {
-            "matcher": { "id": "byName", "options": "Score" },
+            "matcher": {
+              "id": "byName",
+              "options": "Score"
+            },
             "properties": [
-              { "id": "custom.width", "value": 80 }
+              {
+                "id": "custom.width",
+                "value": 80
+              }
             ]
           }
         ]
       },
       "options": {
         "sortBy": [
-          { "displayName": "Score", "desc": true }
+          {
+            "displayName": "Score",
+            "desc": true
+          }
         ],
-        "footer": { "enablePagination": false }
+        "footer": {
+          "enablePagination": false
+        }
       },
       "targets": [
         {
@@ -239,7 +281,12 @@
       "title": "$account",
       "repeat": "account",
       "collapsed": true,
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 9 },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 9
+      },
       "panels": [
         {
           "title": "Utilization Over Time",
@@ -258,9 +305,18 @@
               "thresholds": {
                 "mode": "absolute",
                 "steps": [
-                  { "color": "green", "value": null },
-                  { "color": "yellow", "value": 60 },
-                  { "color": "red", "value": 80 }
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "yellow",
+                    "value": 60
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
                 ]
               },
               "color": {
@@ -314,7 +370,10 @@
                   {
                     "id": "custom.lineStyle",
                     "value": {
-                      "dash": [10, 10],
+                      "dash": [
+                        10,
+                        10
+                      ],
                       "fill": "dash"
                     }
                   },
@@ -344,7 +403,10 @@
                   {
                     "id": "custom.lineStyle",
                     "value": {
-                      "dash": [4, 4],
+                      "dash": [
+                        4,
+                        4
+                      ],
                       "fill": "dash"
                     }
                   },
@@ -368,7 +430,10 @@
             "legend": {
               "displayMode": "table",
               "placement": "bottom",
-              "calcs": ["lastNotNull", "max"]
+              "calcs": [
+                "lastNotNull",
+                "max"
+              ]
             }
           },
           "targets": [
@@ -395,58 +460,6 @@
           ]
         },
         {
-          "title": "",
-          "type": "stat",
-          "gridPos": {
-            "h": 8,
-            "w": 2,
-            "x": 12,
-            "y": 10
-          },
-          "fieldConfig": {
-            "defaults": {
-              "unit": "short",
-              "decimals": 0,
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  { "color": "dark-red", "value": null },
-                  { "color": "red", "value": 0 },
-                  { "color": "#EAB839", "value": 20 },
-                  { "color": "green", "value": 50 }
-                ]
-              },
-              "mappings": [
-                {
-                  "type": "range",
-                  "options": {
-                    "from": -1,
-                    "to": 0,
-                    "result": { "text": "—", "color": "dark-red" }
-                  }
-                }
-              ]
-            },
-            "overrides": []
-          },
-          "options": {
-            "reduceOptions": {
-              "calcs": ["lastNotNull"]
-            },
-            "colorMode": "background",
-            "graphMode": "none",
-            "textMode": "value",
-            "justifyMode": "center"
-          },
-          "targets": [
-            {
-              "expr": "max by (account, org_id) (claude_usage_recommendation_score{account=~\"$account\"})",
-              "legendFormat": "",
-              "refId": "A"
-            }
-          ]
-        },
-        {
           "title": "Session",
           "type": "gauge",
           "gridPos": {
@@ -463,9 +476,18 @@
               "thresholds": {
                 "mode": "absolute",
                 "steps": [
-                  { "color": "green", "value": null },
-                  { "color": "yellow", "value": 60 },
-                  { "color": "red", "value": 80 }
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "yellow",
+                    "value": 60
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
                 ]
               }
             },
@@ -473,7 +495,9 @@
           },
           "options": {
             "reduceOptions": {
-              "calcs": ["lastNotNull"]
+              "calcs": [
+                "lastNotNull"
+              ]
             },
             "showThresholdMarkers": true,
             "showThresholdLabels": false
@@ -502,9 +526,18 @@
               "thresholds": {
                 "mode": "absolute",
                 "steps": [
-                  { "color": "red", "value": null },
-                  { "color": "yellow", "value": 600 },
-                  { "color": "green", "value": 3600 }
+                  {
+                    "color": "red",
+                    "value": null
+                  },
+                  {
+                    "color": "yellow",
+                    "value": 600
+                  },
+                  {
+                    "color": "green",
+                    "value": 3600
+                  }
                 ]
               }
             },
@@ -512,7 +545,9 @@
           },
           "options": {
             "reduceOptions": {
-              "calcs": ["lastNotNull"]
+              "calcs": [
+                "lastNotNull"
+              ]
             },
             "colorMode": "value",
             "graphMode": "none",
@@ -544,9 +579,18 @@
               "thresholds": {
                 "mode": "absolute",
                 "steps": [
-                  { "color": "green", "value": null },
-                  { "color": "yellow", "value": 60 },
-                  { "color": "red", "value": 80 }
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "yellow",
+                    "value": 60
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
                 ]
               }
             },
@@ -554,7 +598,9 @@
           },
           "options": {
             "reduceOptions": {
-              "calcs": ["lastNotNull"]
+              "calcs": [
+                "lastNotNull"
+              ]
             },
             "showThresholdMarkers": true,
             "showThresholdLabels": false
@@ -583,9 +629,18 @@
               "thresholds": {
                 "mode": "absolute",
                 "steps": [
-                  { "color": "red", "value": null },
-                  { "color": "yellow", "value": 3600 },
-                  { "color": "green", "value": 86400 }
+                  {
+                    "color": "red",
+                    "value": null
+                  },
+                  {
+                    "color": "yellow",
+                    "value": 3600
+                  },
+                  {
+                    "color": "green",
+                    "value": 86400
+                  }
                 ]
               }
             },
@@ -593,7 +648,9 @@
           },
           "options": {
             "reduceOptions": {
-              "calcs": ["lastNotNull"]
+              "calcs": [
+                "lastNotNull"
+              ]
             },
             "colorMode": "value",
             "graphMode": "none",
@@ -614,7 +671,12 @@
       "type": "row",
       "title": "Diagnostics",
       "collapsed": true,
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 18 },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 18
+      },
       "panels": [
         {
           "title": "Poll Errors (5m)",
