@@ -169,7 +169,7 @@
       "type": "timeseries",
       "gridPos": {
         "h": 8,
-        "w": 24,
+        "w": 14,
         "x": 0,
         "y": 10
       },
@@ -318,13 +318,13 @@
       ]
     },
     {
-      "title": "Session Utilization",
+      "title": "Session",
       "type": "gauge",
       "gridPos": {
-        "h": 6,
-        "w": 6,
-        "x": 0,
-        "y": 18
+        "h": 5,
+        "w": 5,
+        "x": 14,
+        "y": 10
       },
       "fieldConfig": {
         "defaults": {
@@ -345,63 +345,27 @@
       "options": {
         "reduceOptions": {
           "calcs": ["lastNotNull"]
-        }
+        },
+        "showThresholdMarkers": true,
+        "showThresholdLabels": false
       },
       "targets": [
         {
           "expr": "max by (account, org_id) (claude_usage_session_utilization_percent{account=~\"$account\"})",
-          "legendFormat": "{{account}}",
+          "legendFormat": "",
           "refId": "A"
         }
       ]
     },
     {
-      "title": "Weekly Utilization",
-      "type": "gauge",
-      "gridPos": {
-        "h": 6,
-        "w": 6,
-        "x": 6,
-        "y": 18
-      },
-      "fieldConfig": {
-        "defaults": {
-          "unit": "percent",
-          "min": 0,
-          "max": 100,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              { "color": "green", "value": null },
-              { "color": "yellow", "value": 60 },
-              { "color": "red", "value": 80 }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "options": {
-        "reduceOptions": {
-          "calcs": ["lastNotNull"]
-        }
-      },
-      "targets": [
-        {
-          "expr": "max by (account, org_id) (claude_usage_weekly_utilization_percent{account=~\"$account\"})",
-          "legendFormat": "{{account}}",
-          "refId": "A"
-        }
-      ]
-    },
-    {
-      "title": "Session Reset",
-      "description": "Time until 5-hour session window resets",
+      "title": "",
       "type": "stat",
+      "transparent": true,
       "gridPos": {
-        "h": 6,
-        "w": 6,
-        "x": 12,
-        "y": 18
+        "h": 3,
+        "w": 5,
+        "x": 14,
+        "y": 15
       },
       "fieldConfig": {
         "defaults": {
@@ -423,25 +387,66 @@
         },
         "colorMode": "value",
         "graphMode": "none",
-        "textMode": "value_and_name"
+        "textMode": "value_and_name",
+        "justifyMode": "center"
       },
       "targets": [
         {
           "expr": "min by (account, org_id) (claude_usage_session_reset_seconds{account=~\"$account\"}) - time()",
-          "legendFormat": "{{account}}",
+          "legendFormat": "resets in",
           "refId": "A"
         }
       ]
     },
     {
-      "title": "Weekly Reset",
-      "description": "Time until 7-day weekly limit resets",
-      "type": "stat",
+      "title": "Weekly",
+      "type": "gauge",
       "gridPos": {
-        "h": 6,
-        "w": 6,
-        "x": 18,
-        "y": 18
+        "h": 5,
+        "w": 5,
+        "x": 19,
+        "y": 10
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "yellow", "value": 60 },
+              { "color": "red", "value": 80 }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": ["lastNotNull"]
+        },
+        "showThresholdMarkers": true,
+        "showThresholdLabels": false
+      },
+      "targets": [
+        {
+          "expr": "max by (account, org_id) (claude_usage_weekly_utilization_percent{account=~\"$account\"})",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "title": "",
+      "type": "stat",
+      "transparent": true,
+      "gridPos": {
+        "h": 3,
+        "w": 5,
+        "x": 19,
+        "y": 15
       },
       "fieldConfig": {
         "defaults": {
@@ -463,12 +468,13 @@
         },
         "colorMode": "value",
         "graphMode": "none",
-        "textMode": "value_and_name"
+        "textMode": "value_and_name",
+        "justifyMode": "center"
       },
       "targets": [
         {
           "expr": "min by (account, org_id) (claude_usage_weekly_reset_seconds{account=~\"$account\"}) - time()",
-          "legendFormat": "{{account}}",
+          "legendFormat": "resets in",
           "refId": "A"
         }
       ]
@@ -477,7 +483,7 @@
       "type": "row",
       "title": "Diagnostics",
       "collapsed": true,
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 24 },
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 18 },
       "panels": [
         {
           "title": "Poll Errors (5m)",
@@ -486,7 +492,7 @@
             "h": 6,
             "w": 12,
             "x": 0,
-            "y": 25
+            "y": 19
           },
           "fieldConfig": {
             "defaults": {
@@ -521,7 +527,7 @@
             "h": 6,
             "w": 12,
             "x": 12,
-            "y": 25
+            "y": 19
           },
           "fieldConfig": {
             "defaults": {
