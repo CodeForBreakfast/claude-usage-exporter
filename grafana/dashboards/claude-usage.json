@@ -18,7 +18,7 @@
       "type": "timeseries",
       "gridPos": {
         "h": 8,
-        "w": 24,
+        "w": 14,
         "x": 0,
         "y": 1
       },
@@ -158,6 +158,83 @@
       ]
     },
     {
+      "title": "Account Priority Ranking",
+      "type": "table",
+      "gridPos": {
+        "h": 8,
+        "w": 10,
+        "x": 14,
+        "y": 1
+      },
+      "fieldConfig": {
+        "defaults": {
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "red", "value": null },
+              { "color": "#EAB839", "value": 20 },
+              { "color": "green", "value": 50 }
+            ]
+          },
+          "custom": {
+            "cellOptions": {
+              "type": "color-background"
+            }
+          }
+        },
+        "overrides": [
+          {
+            "matcher": { "id": "byName", "options": "account" },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": { "type": "auto" }
+              },
+              { "id": "custom.width", "value": 140 }
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "Score" },
+            "properties": [
+              { "id": "custom.width", "value": 80 }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "sortBy": [
+          { "displayName": "Score", "desc": true }
+        ],
+        "footer": { "enablePagination": false }
+      },
+      "targets": [
+        {
+          "expr": "max by (account) (claude_usage_recommendation_score)",
+          "legendFormat": "",
+          "refId": "A",
+          "instant": true,
+          "format": "table"
+        }
+      ],
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true
+            },
+            "renameByName": {
+              "Value": "Score"
+            },
+            "indexByName": {
+              "account": 0,
+              "Value": 1
+            }
+          }
+        }
+      ]
+    },
+    {
       "type": "row",
       "title": "$account",
       "repeat": "account",
@@ -169,7 +246,7 @@
           "type": "timeseries",
           "gridPos": {
             "h": 8,
-            "w": 14,
+            "w": 12,
             "x": 0,
             "y": 10
           },
@@ -314,6 +391,58 @@
               "expr": "clamp_min(clamp_max((1 - (min by (account, org_id) (claude_usage_weekly_reset_seconds{account=~\"$account\"}) - time()) / 604800) * 100, 100), 0) and min by (account, org_id) (claude_usage_weekly_reset_seconds{account=~\"$account\"}) > time()",
               "legendFormat": "Ideal \u2014 weekly",
               "refId": "D"
+            }
+          ]
+        },
+        {
+          "title": "",
+          "type": "stat",
+          "gridPos": {
+            "h": 8,
+            "w": 2,
+            "x": 12,
+            "y": 10
+          },
+          "fieldConfig": {
+            "defaults": {
+              "unit": "short",
+              "decimals": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  { "color": "dark-red", "value": null },
+                  { "color": "red", "value": 0 },
+                  { "color": "#EAB839", "value": 20 },
+                  { "color": "green", "value": 50 }
+                ]
+              },
+              "mappings": [
+                {
+                  "type": "range",
+                  "options": {
+                    "from": -1,
+                    "to": 0,
+                    "result": { "text": "—", "color": "dark-red" }
+                  }
+                }
+              ]
+            },
+            "overrides": []
+          },
+          "options": {
+            "reduceOptions": {
+              "calcs": ["lastNotNull"]
+            },
+            "colorMode": "background",
+            "graphMode": "none",
+            "textMode": "value",
+            "justifyMode": "center"
+          },
+          "targets": [
+            {
+              "expr": "max by (account, org_id) (claude_usage_recommendation_score{account=~\"$account\"})",
+              "legendFormat": "",
+              "refId": "A"
             }
           ]
         },
