@@ -12,3 +12,4 @@ result-*
 !.beads/formulas/
 .claude/
 CLAUDE.local.md
+*.gate.lock*
