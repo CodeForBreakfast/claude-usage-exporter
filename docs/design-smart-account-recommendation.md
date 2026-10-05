@@ -1,7 +1,5 @@
 # Design: Smart Account Recommendation Engine
 
-**Issue**: cue-1cj
-**Author**: polecat/quartz
 **Date**: 2026-03-04
 
 ## Problem
@@ -265,7 +263,7 @@ recommendation:
   enabled: true         # Toggle recommendation engine
 ```
 
-## Implementation Plan (Follow-up Beads)
+## Implementation Plan
 
 ### Phase 1: Score computation + metric export
 - Add scoring logic to `poller.go` (runs per-poll, per-account)

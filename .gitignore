@@ -3,13 +3,9 @@ claude-usage-exporter
 result
 result-*
 .direnv
-
-# Gas Town (added by gt)
 .runtime/
-.claude/commands/
 .logs/
 .beads/
-!.beads/formulas/
 .claude/
 CLAUDE.local.md
 *.gate.lock*

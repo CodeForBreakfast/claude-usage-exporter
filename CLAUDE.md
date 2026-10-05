@@ -30,5 +30,5 @@ This repo decides and changes:
 - **Claude Code's own telemetry.** The metrics Claude Code emits belong to
   Claude Code. This repo only shares the `org_id` key with them.
 
-A seat may decline an ask that falls outside this remit, and says where the ask
-belongs.
+An agent working here may decline an ask that falls outside this remit, and
+says where the ask belongs.
