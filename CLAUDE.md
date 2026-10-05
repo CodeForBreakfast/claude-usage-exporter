@@ -29,6 +29,3 @@ This repo decides and changes:
   worked around by changing what the metrics mean.
 - **Claude Code's own telemetry.** The metrics Claude Code emits belong to
   Claude Code. This repo only shares the `org_id` key with them.
-
-An agent working here may decline an ask that falls outside this remit, and
-says where the ask belongs.

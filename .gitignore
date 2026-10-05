@@ -3,9 +3,5 @@ claude-usage-exporter
 result
 result-*
 .direnv
-.runtime/
-.logs/
-.beads/
 .claude/
 CLAUDE.local.md
-*.gate.lock*
